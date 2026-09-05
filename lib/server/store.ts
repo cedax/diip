@@ -5,7 +5,7 @@ import path from "node:path";
 import { seedData } from "../seed";
 import { applyAction, requireRole, visibleData } from "../domain";
 import type { Action, AppData, ManagedUser, UserSession } from "../types";
-const folder = process.env.DIIP_DATA_DIR || path.join(process.cwd(), ".data");
+const folder = process.env.DIIP_DATA_DIR || path.join(process.cwd(), ".data", process.env.NODE_ENV === "production" && process.env.DIIP_DEMO !== "true" ? "production" : "demo");
 mkdirSync(folder, { recursive: true });
 const db = new DatabaseSync(path.join(folder, "diip.sqlite"));
 db.exec("PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS state (id INTEGER PRIMARY KEY CHECK(id=1), version INTEGER NOT NULL, body TEXT NOT NULL); CREATE TABLE IF NOT EXISTS credentials (id TEXT PRIMARY KEY, email TEXT UNIQUE NOT NULL, salt TEXT NOT NULL, hash TEXT NOT NULL); CREATE TABLE IF NOT EXISTS sessions (token TEXT PRIMARY KEY, user_id TEXT NOT NULL, expires INTEGER NOT NULL); CREATE TABLE IF NOT EXISTS attempts (email TEXT PRIMARY KEY, count INTEGER NOT NULL, until INTEGER NOT NULL)");

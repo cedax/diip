@@ -1,4 +1,4 @@
-import type { Action, AppData, AttendanceRecord, Incident, UserSession } from "./types";
+import type { Action, AppData, AttendanceRecord, UserSession } from "./types";
 import { classifyRecord, localDate, localTime, minutesBetween, normalizeImportedRows, recordFlags, shiftFor, validDate, validTime } from "./attendance";
 export function requireRole(user: UserSession, roles: string[]) { if (!roles.includes(user.role)) throw new Error("Tu rol no tiene permiso para realizar esta acción."); }
 function requireText(value: string, label: string, max = 2000) { if (typeof value !== "string" || !value.trim() || value.length > max) throw new Error(`${label}: completa el campo (máximo ${max} caracteres).`); }

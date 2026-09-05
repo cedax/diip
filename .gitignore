@@ -1,10 +1,6 @@
-node_modules/
+.data/
 .next/
-out/
+node_modules/
+.qa/
 .env*
 !.env.example
-npm-debug.log*
-pnpm-debug.log*
-coverage/
-*.tsbuildinfo
-.qa

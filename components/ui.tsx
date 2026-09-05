@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- Photos are private, compressed data URLs, not remote optimized assets. */
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, FileSpreadsheet, X } from "lucide-react";
@@ -6,12 +7,14 @@ export type ModuleProps = { data: AppData; session: UserSession; run: (action: A
 export function Heading({ title, description, action, eyebrow = "DIIP ASISTENCIA" }: { title: string; description: string; action?: ReactNode; eyebrow?: string }) { return <div className="page-heading"><div><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{description}</p></div>{action}</div>; }
 export function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const [error, setError] = useState("");
+  useEffect(() => { const handle = (event: Event) => setError((event as CustomEvent<string>).detail); window.addEventListener("diip-error", handle); return () => window.removeEventListener("diip-error", handle); }, []);
   useEffect(() => { const d = ref.current!; d.showModal(); const prev = document.body.style.overflow; document.body.style.overflow = "hidden"; return () => { d.close(); document.body.style.overflow = prev; }; }, []);
-  return <dialog ref={ref} className="modal" aria-label={title} onCancel={onClose} onClick={e => { if (e.target === e.currentTarget) { const rect = e.currentTarget.getBoundingClientRect(); if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) onClose(); } }}><div className="modal-head"><h2>{title}</h2><button type="button" className="icon-button" onClick={onClose} aria-label="Cerrar ventana"><X size={20} /></button></div>{children}</dialog>;
+  return <dialog ref={ref} className="modal" aria-label={title} onCancel={onClose} onClick={e => { if (e.target === e.currentTarget) { const rect = e.currentTarget.getBoundingClientRect(); if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) onClose(); } }}><div className="modal-head"><h2>{title}</h2><button type="button" className="icon-button" onClick={onClose} aria-label="Cerrar ventana"><X size={20} /></button></div>{error && <p role="alert" className="inline-error">{error}</p>}{children}</dialog>;
 }
 export function Status({ value }: { value: string }) { const tone = ["Correcto", "Autorizada", "Activo"].includes(value) ? "green" : ["Retardo", "Pendiente", "Información requerida", "En curso"].includes(value) ? "amber" : ["Incompleto", "Rechazada", "Falta"].includes(value) ? "red" : "gray"; return <span className={`status-pill ${tone}`}>{value}</span>; }
 export function Empty({ title = "No hay resultados", text = "Prueba con otros filtros o agrega un registro." }: { title?: string; text?: string }) { return <div className="empty-state"><FileSpreadsheet /><strong>{title}</strong><span>{text}</span></div>; }
-export function Person({ name, number, photo }: { name: string; number?: string; photo?: string }) { return <span className="person">{photo ? /* eslint-disable-next-line @next/next/no-img-element */ <img className="avatar" src={photo} alt="" /> : <span className="avatar">{name.split(" ").slice(0, 2).map(p => p[0]).join("")}</span>}<span><strong>{name}</strong><small>{number}</small></span></span>; }
+export function Person({ name, number, photo }: { name: string; number?: string; photo?: string }) { return <span className="person">{photo ?  <img className="avatar" src={photo} alt="" /> : <span className="avatar">{name.split(" ").slice(0, 2).map(p => p[0]).join("")}</span>}<span><strong>{name}</strong><small>{number}</small></span></span>; }
 export function hours(n: number) { return `${Math.floor(n / 60)}h ${n % 60}m`; }
 export function dateLabel(date: string) { return new Intl.DateTimeFormat("es-MX", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(`${date}T12:00:00`)); }
 export function download(name: string, content: string, type = "text/csv;charset=utf-8") { const url = URL.createObjectURL(new Blob([type.includes("csv") ? "\uFEFF" : "", content], { type })); const a = document.createElement("a"); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }

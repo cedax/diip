@@ -81,7 +81,7 @@ export function metrics(data: AppData, records: AttendanceRecord[], employees: E
         const shift = data.shifts.find(s => s.id === employee.shiftId); if (!(shift?.workDays ?? [1, 2, 3, 4, 5]).includes(day.getUTCDay())) continue;
         scheduled++;
         if (complete.some(r => r.employeeId === employee.id && r.date === date)) present++;
-        else { const justified = data.incidents.some(i => i.employeeId === employee.id && i.status === "Autorizada" && ["Vacaciones", "Permiso", "Incapacidad", "Falta"].includes(i.type) && (i.date ?? "") <= date && (i.endDate ?? i.date ?? "") >= date); absences.push({ employeeId: employee.id, date, justified }); }
+        else if (!entries.some(r => r.employeeId === employee.id && r.date === date)) { const justified = data.incidents.some(i => i.employeeId === employee.id && i.status === "Autorizada" && ["Vacaciones", "Permiso", "Incapacidad", "Falta"].includes(i.type) && (i.date ?? "") <= date && (i.endDate ?? i.date ?? "") >= date); absences.push({ employeeId: employee.id, date, justified }); }
       }
     }
   }
