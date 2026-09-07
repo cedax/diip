@@ -105,7 +105,6 @@ button { cursor: pointer; }
 @media (max-width: 420px) { .kpi-grid { grid-template-columns: 1fr; }.report-kpis { grid-template-columns: 1fr 1fr; }.top-search { display: none; }.topbar .mobile-only { margin-right: auto; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
 
-/* Consistent, quiet visual language and accessible controls. */
 :root { --navy:#1e3a8a; --navy-2:#172b50; --blue:#2563eb; --cyan:#6094f6; --bg:#f7f8fa; --text:#202d40; --muted:#64748b; --line:#e3e8ef; --shadow:0 2px 8px rgba(24,43,72,.025); }
 body { font-size:14px; line-height:1.5; }
 button,input,select,textarea { font:inherit; }
@@ -140,4 +139,7 @@ dialog.modal { border:0; width:min(700px,calc(100vw - 32px)); max-height:calc(10
 @media(max-width:760px) { .sidebar { visibility:hidden; }.sidebar-open { visibility:visible; } }
 
 .attendance-submit { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; gap:18px; border-top:1px solid var(--line); padding-top:18px; }.attendance-submit .primary-button { width:auto; min-width:210px; }
+.login-install { margin-top:10px; }
+@media(display-mode:standalone) { .install-mini,.login-install { display:none!important; } }
+@media(max-width:760px) { .topbar .install-mini { display:flex; } }
 @media(max-width:760px) { .attendance-submit { grid-column:auto; flex-direction:column; align-items:stretch; gap:8px; }.attendance-submit .primary-button { width:100%; } }

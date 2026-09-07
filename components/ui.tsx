@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element -- Photos are private, compressed data URLs, not remote optimized assets. */
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, FileSpreadsheet, X } from "lucide-react";

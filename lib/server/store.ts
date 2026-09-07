@@ -23,7 +23,6 @@ if (!db.prepare("SELECT id FROM state WHERE id=1").get()) {
     { id: "colaborador", name: "Ana Martínez", email: "colaborador@diip.mx", role: "Colaborador", employeeId: "e1", active: true },
   ];
   if (production && process.env.DIIP_ADMIN_EMAIL && (process.env.DIIP_ADMIN_PASSWORD?.length ?? 0) >= 12) users.push({ id: "admin", name: "Administración", email: process.env.DIIP_ADMIN_EMAIL, role: "Administrador", active: true });
-  // Do not initialize production during build or without bootstrap credentials.
   if (users.length) {
     const initial: AppData = production ? { employees: [], projects: [], shifts: [], attendance: [], incidents: [] } : structuredClone(seedData);
     initial.users = users; initial.policy = { maxDailyRecords: 1, maxMonthlyRecords: 31 };

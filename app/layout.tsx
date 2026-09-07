@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "DIIP Asistencia",
   description: "Validación y seguimiento de asistencia para proyectos ferroviarios.",
   applicationName: "DIIP Asistencia",
+  icons: { apple: "/icon-192.png" },
   appleWebApp: { capable: true, statusBarStyle: "default", title: "DIIP Asistencia" },
   formatDetection: { telephone: false },
 };

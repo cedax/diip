@@ -106,7 +106,6 @@ export function applyAction(source: AppData, action: Action, user: UserSession, 
     case "user": throw new Error("Usa la operación de usuarios del servidor.");
     default: throw new Error("Acción no reconocida.");
   }
-  // Close-day anomalies are created on mutations without flagging an open shift as a failure.
   for (const r of data.attendance) if (r.date < localDate(new Date(now.getTime() - 86400000)) && (!r.checkIn || !r.checkOut)) recordFlags(r, shiftFor(data, r)).forEach(f => incidentFor(r, f));
   data.audit = [{ id: crypto.randomUUID(), ...history(`Operación: ${action.type}`) }, ...(data.audit ?? [])];
   return data;

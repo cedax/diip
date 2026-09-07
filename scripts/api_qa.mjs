@@ -1,4 +1,3 @@
-// Run only against an isolated DIIP_DEMO server on port 3001 with DIIP_DATA_DIR pointing to a disposable test directory.
 import assert from 'node:assert/strict';
 import { writeFile, mkdir } from 'node:fs/promises';
 const base = process.env.DIIP_TEST_URL || 'http://127.0.0.1:3001';
