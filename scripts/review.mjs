@@ -7,7 +7,7 @@ const results=[];
 for (const [name, viewport] of [['desktop',{width:1440,height:1000}],['mobile',{width:390,height:844}]]) {
  const context=await browser.newContext({viewport,reducedMotion:"reduce",permissions:['camera']}); const page=await context.newPage(); const errors=[];
  page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:3000',{waitUntil:'networkidle'});
+ await page.goto('http://127.0.0.1:2560',{waitUntil:'networkidle'});
  await page.getByRole('button',{name:'Entrar al sistema'}).click();
  await page.getByRole('heading',{name:/Hola,/}).waitFor();
  const navigate=async(label)=>{ if(viewport.width<760) await page.getByRole('button',{name:'Abrir menú'}).click(); await page.getByRole('navigation').getByRole('button',{name:label,exact:true}).click(); };

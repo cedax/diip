@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Abre http://localhost:3000. En desarrollo se crean cuentas de demostración:
+Abre http://localhost:2560. En desarrollo se crean cuentas de demostración:
 
 | Rol | Correo | Contraseña |
 | --- | --- | --- |
@@ -42,7 +42,7 @@ npm run build
 node scripts/review.mjs
 ```
 
-La revisión visual requiere un servidor en 127.0.0.1:3000 y Edge en la ruta configurada en el script. Usa cámara simulada, no accede a la cámara real. Capturas y resultados: `.qa/revision/`. Las pruebas de API pueden ejecutarse con `node scripts/api_qa.mjs` contra un servidor de pruebas; ver el encabezado del script.
+La revisión visual requiere un servidor en 127.0.0.1:2560 y Edge en la ruta configurada en el script. Usa cámara simulada, no accede a la cámara real. Capturas y resultados: `.qa/revision/`. Las pruebas de API pueden ejecutarse con `node scripts/api_qa.mjs` contra un servidor de pruebas; ver el encabezado del script.
 
 ## Producción
 

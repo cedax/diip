@@ -1,7 +1,7 @@
 import { chromium } from "playwright-core";
 import { mkdir } from "node:fs/promises";
 
-const baseUrl = "http://127.0.0.1:3000";
+const baseUrl = "http://127.0.0.1:2560";
 const output = new URL("../.qa/", import.meta.url);
 await mkdir(output, { recursive: true });
 
