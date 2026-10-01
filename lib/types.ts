@@ -1,6 +1,14 @@
-export type Role = "Administrador" | "Supervisor" | "Analista" | "Colaborador";
+export type Role = "Administrador" | "Supervisor" | "Analista" | "Colaborador" | "Director general" | "Gestor TI" | "Recursos Humanos" | "Finanzas";
 export type AttendanceStatus = "Correcto" | "Retardo" | "Incompleto" | "Duplicado";
-export type IncidentStatus = "Pendiente" | "Autorizada" | "Rechazada" | "Información requerida";
+export type IncidentStatus = "Pendiente" | "Propuesta de ajuste" | "Autorizada" | "Rechazada" | "Información requerida" | "Aplicada";
+
+export interface GeoEvidence {
+  latitude: number;
+  longitude: number;
+  accuracy: number;
+  distanceMeters: number;
+  withinRadius: boolean;
+}
 
 export interface UserSession {
   id?: string;
@@ -15,6 +23,11 @@ export interface Project {
   name: string;
   location: string;
   active: boolean;
+  service?: string;
+  responsible?: string;
+  latitude?: number;
+  longitude?: number;
+  radiusMeters?: number;
 }
 
 export interface Shift {
@@ -24,6 +37,7 @@ export interface Shift {
   end: string;
   toleranceMinutes: number;
   workDays?: number[];
+  specialDays?: { date: string; label: string; working: boolean }[];
 }
 
 export interface Employee {
@@ -37,6 +51,7 @@ export interface Employee {
   photo?: string;
   startDate?: string;
   endDate?: string;
+  assignmentHistory?: { projectId: string; shiftId: string; from: string; to?: string }[];
 }
 
 export interface AttendanceRecord {
@@ -56,6 +71,8 @@ export interface AttendanceRecord {
   shiftSnapshot?: Shift;
   flags?: string[];
   history?: { action: string; by: string; at: string }[];
+  checkInLocation?: GeoEvidence;
+  checkOutLocation?: GeoEvidence;
 }
 
 export interface Incident {
@@ -74,6 +91,10 @@ export interface Incident {
   proposedCheckIn?: string;
   proposedCheckOut?: string;
   deduction?: boolean;
+  payrollApplied?: boolean;
+  reviewedBy?: string;
+  authorizedBy?: string;
+  appliedBy?: string;
 }
 
 export interface AppData {
@@ -85,21 +106,23 @@ export interface AppData {
   users?: ManagedUser[];
   audit?: { id: string; action: string; by: string; at: string }[];
   imports?: { id: string; name: string; by: string; at: string; rows: unknown[][]; errors: string[]; count: number }[];
-  policy?: { maxDailyRecords: number; maxMonthlyRecords: number };
+  policy?: { maxDailyRecords: number; maxMonthlyRecords: number; defaultRadiusMeters?: number; timezone?: string; retentionDays?: number; incidentTypes?: string[] };
 }
 
 export interface ManagedUser extends UserSession { id: string; active: boolean }
 
 export type Action =
-  | { type: "clock"; employeeId: string; photo: string; direction: "in" | "out" }
+  | { type: "clock"; employeeId: string; photo: string; direction: "in" | "out"; location?: GeoEvidence }
   | { type: "employee"; employee: Employee }
   | { type: "project"; project: Project }
   | { type: "shift"; shift: Shift }
   | { type: "incident"; incident: Pick<Incident, "employeeId" | "attendanceId" | "type" | "description" | "date" | "endDate" | "proposedCheckIn" | "proposedCheckOut">; photo?: string }
   | { type: "decision"; id: string; status: IncidentStatus; comment: string; deduction: boolean }
   | { type: "reply"; id: string; comment: string; photo?: string }
+  | { type: "finance"; id: string }
   | { type: "import"; name: string; rows: unknown[][] }
-  | { type: "policy"; maxDailyRecords: number; maxMonthlyRecords: number }
+  | { type: "export"; format: "CSV" | "Excel"; report: string }
+  | { type: "policy"; maxDailyRecords: number; maxMonthlyRecords: number; defaultRadiusMeters?: number; timezone?: string; retentionDays?: number; incidentTypes?: string[] }
   | { type: "user"; user: ManagedUser; password?: string };
 
 export type ViewKey = "dashboard" | "attendance" | "employees" | "catalogs" | "incidents" | "import" | "reports" | "settings" | "users";

@@ -146,3 +146,22 @@ dialog.modal { border:0; width:min(700px,calc(100vw - 32px)); max-height:calc(10
 @media(display-mode:standalone) { .install-mini,.login-install { display:none!important; } }
 @media(max-width:760px) { .topbar .install-mini { display:flex; } }
 @media(max-width:760px) { .attendance-submit { grid-column:auto; flex-direction:column; align-items:stretch; gap:8px; }.attendance-submit .primary-button { width:100%; } }
+.primary-button { color:var(--navy); }
+.primary-button:hover { color:white; }
+.recovery-link { display:block; margin:-5px 0 14px auto; }
+.geo-capture { min-width:0; padding:18px; border:1px solid var(--line); border-radius:10px; background:#f8fafc; }
+.geo-capture > div { display:flex; align-items:center; gap:10px; color:var(--navy); }
+.geo-capture span { display:flex; flex-direction:column; }
+.geo-capture small { color:var(--muted); font-size:11px; }
+.geo-capture .secondary-button { margin-top:10px; }
+.geo-ok,.geo-warning { display:flex; align-items:center; gap:6px; margin:12px 0 0; padding:9px 11px; border-radius:7px; font-size:12px; }
+.geo-ok { color:var(--green); background:var(--green-soft); }
+.geo-warning { color:#a4550c; background:var(--amber-soft); }
+.location-detail,.assignment-history { padding:13px; border-radius:8px; background:#f7f9fc; }
+.location-detail p,.assignment-history p { margin:6px 0; }
+.workflow-strip { display:flex; gap:8px; overflow-x:auto; margin:-5px 0 18px; }
+.workflow-strip span { flex:1; min-width:120px; padding:10px; color:var(--muted); border-top:3px solid var(--blue); background:white; font-size:11px; text-align:center; }
+.responsibility-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:16px 0; }
+.responsibility-grid span { padding:10px; border-radius:7px; background:#f7f9fc; color:var(--muted); font-size:11px; }
+.responsibility-grid strong { display:block; margin-top:4px; color:var(--text); }
+@media(max-width:760px) { .responsibility-grid { grid-template-columns:1fr; } }

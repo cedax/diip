@@ -68,8 +68,8 @@ export function mutate(action: Action, user: UserSession, version: number) {
     if (state.version !== version) throw new Error("La información cambió en otra sesión. Actualiza y vuelve a intentar; tu formulario sigue abierto.");
     let next: AppData;
     if (action.type === "user") {
-      requireRole(user, ["Administrador"]); const u = action.user;
-      if (!u.id || !u.name?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(u.email) || !["Administrador", "Supervisor", "Analista", "Colaborador"].includes(u.role)) throw new Error("Revisa nombre, correo y rol del usuario.");
+      requireRole(user, ["Administrador", "Gestor TI"]); const u = action.user;
+      if (!u.id || !u.name?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(u.email) || !["Administrador", "Supervisor", "Analista", "Colaborador", "Director general", "Gestor TI", "Recursos Humanos", "Finanzas"].includes(u.role)) throw new Error("Revisa nombre, correo y rol del usuario.");
       if (u.role === "Colaborador" && !state.data.employees.some(e => e.id === u.employeeId)) throw new Error("Vincula el usuario a un colaborador.");
       if (state.data.users?.some(x => x.id !== u.id && (x.email.toLowerCase() === u.email.toLowerCase() || (u.role === "Colaborador" && x.role === "Colaborador" && x.employeeId === u.employeeId)))) throw new Error("El correo o colaborador ya están vinculados a un usuario.");
       if (u.id === user.id && (!u.active || u.role !== "Administrador")) throw new Error("No puedes desactivar tu cuenta ni quitar tu propio rol administrador.");
