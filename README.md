@@ -46,7 +46,7 @@ La revisión visual requiere un servidor en 127.0.0.1:2560 y Edge en la ruta con
 
 ## Producción
 
-En Ubuntu, crea primero el archivo de variables del servidor:
+En Ubuntu puedes usar un `.env` normal o un `.env.production.local`. El comando `npm start` carga explícitamente `.env`, `.env.local`, `.env.production` y `.env.production.local` cuando existen. Por ejemplo:
 
 ```bash
 cp .env.example .env.production.local
