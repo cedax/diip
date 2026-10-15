@@ -46,6 +46,27 @@ La revisión visual requiere un servidor en 127.0.0.1:2560 y Edge en la ruta con
 
 ## Producción
 
+En Ubuntu, crea primero el archivo de variables del servidor:
+
+```bash
+cp .env.example .env.production.local
+nano .env.production.local
+```
+
+Define un correo real, una contraseña de al menos 12 caracteres y el origen público exacto. Después ejecuta:
+
+```bash
+npm install
+npm run build
+npm start
+```
+
+La aplicación escucha en `2560`. En el primer arranque con una base vacía crea el administrador indicado en `DIIP_ADMIN_EMAIL`. Inicia sesión con esa cuenta y abre **Usuarios y permisos → Nuevo usuario** para crear supervisores, analistas, colaboradores y las demás cuentas. Los usuarios nuevos requieren contraseñas de 12 a 128 caracteres; las cuentas de colaborador deben vincularse con un colaborador existente.
+
+Si la base de producción ya contiene información, las variables no reemplazan usuarios ni contraseñas existentes. Conserva el directorio `.data/production` al actualizar la aplicación.
+
+En PowerShell, las mismas variables también pueden definirse directamente:
+
 ```powershell
 $env:DIIP_ADMIN_EMAIL='administracion@tu-empresa.mx'
 $env:DIIP_ADMIN_PASSWORD='una-contraseña-larga-y-única'
