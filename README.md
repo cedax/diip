@@ -61,6 +61,21 @@ npm run build
 npm start
 ```
 
+Con PM2, registra la aplicación mediante el archivo incluido para asegurar que se ejecute desde el directorio correcto y pase por `npm start`:
+
+```bash
+pm2 delete diip
+pm2 start ecosystem.config.cjs
+pm2 save
+```
+
+Después de cambiar variables de entorno o actualizar el código:
+
+```bash
+npm run build
+pm2 restart diip --update-env
+```
+
 La aplicación escucha en `2560`. En el primer arranque con una base vacía crea el administrador indicado en `DIIP_ADMIN_EMAIL`. Inicia sesión con esa cuenta y abre **Usuarios y permisos → Nuevo usuario** para crear supervisores, analistas, colaboradores y las demás cuentas. Los usuarios nuevos requieren contraseñas de 12 a 128 caracteres; las cuentas de colaborador deben vincularse con un colaborador existente.
 
 Si la base de producción ya contiene información, las variables no reemplazan usuarios ni contraseñas existentes. Conserva el directorio `.data/production` al actualizar la aplicación.
